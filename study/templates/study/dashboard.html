@@ -1,0 +1,187 @@
+
+{% extends "study/layout.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+<!-- Page heading -->
+<div class="mb-4">
+    <h1>Dashboard</h1>
+    <p>Your study activity at a glance.</p>
+</div>
+
+
+<!-- Period selection -->
+<div class="d-flex flex-wrap gap-2 mb-4">
+
+    <a href="{% url 'dashboard' %}?period=week"
+       class="btn btn-pastel-yellow period-btn {% if period == 'week' %}active{% endif %}"
+       data-period="week"
+       {% if period == 'week' %}aria-current="page"{% endif %}>
+        This Week
+    </a>
+
+    <a href="{% url 'dashboard' %}?period=month"
+       class="btn btn-pastel-yellow period-btn {% if period == 'month' %}active{% endif %}"
+       data-period="month"
+       {% if period == 'month' %}aria-current="page"{% endif %}>
+        This Month
+    </a>
+
+    <a href="{% url 'dashboard' %}?period=all"
+       class="btn btn-pastel-yellow period-btn {% if period == 'all' %}active{% endif %}"
+       data-period="all"
+       {% if period == 'all' %}aria-current="page"{% endif %}>
+        All Time
+    </a>
+
+</div>
+
+
+<!-- Statistics -->
+<div class="row g-3 mb-4">
+
+    <!-- Total study time -->
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    Total Study Time
+                </h5>
+
+                <h2 id="total-minutes">
+                    {{ total_minutes }} minutes
+                </h2>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Number of sessions -->
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    Study Sessions
+                </h5>
+
+                <h2 id="session-count">
+                    {{ session_count }}
+                </h2>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Most studied subject -->
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+
+                <h5 class="card-title">
+                    Most Studied Subject
+                </h5>
+
+                <div id="most-studied">
+
+                    {% if most_studied %}
+
+                        <h2>
+                            {{ most_studied.subject__name }}
+                        </h2>
+
+                        <p>
+                            {{ most_studied.total_minutes }} minutes
+                        </p>
+
+                    {% else %}
+
+                        <p>No study sessions yet.</p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Study time by subject -->
+<div class="card mb-4">
+    <div class="card-body">
+
+        <h4 class="card-title mb-3">
+            Study Time by Subject
+        </h4>
+
+        <div id="study-time-list">
+
+            {% for subject in study_time %}
+
+                <div class="d-flex justify-content-between mb-2">
+
+                    <span>
+                        {{ subject.subject__name }}
+                    </span>
+
+                    <span>
+                        {{ subject.total_minutes }} minutes
+                    </span>
+
+                </div>
+
+            {% empty %}
+
+                <p>No study activity for this period.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Study activity chart -->
+<div class="card mb-4">
+    <div class="card-body">
+
+        <h4 class="card-title mb-3">
+            Study Activity Chart
+        </h4>
+
+        <div class="mx-auto" style="position: relative; width: 100%; max-width: 350px; height: 350px;">
+            <canvas id="studyChart"></canvas>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Error message for failed requests -->
+<p id="dashboard-error" class="text-danger" role="alert" hidden>
+    Unable to update the dashboard. Please try again.
+</p>
+
+
+<!-- Django data -->
+{{ chart_data|json_script:"chart-data" }}
+
+
+<!-- Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+
+
+<!-- Dashboard JavaScript -->
+<script src="{% static 'study/dashboard.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+.form-control,
+.form-control:focus {
+    background-color: #FFF380;
+}
+
+.btn-pastel-yellow {
+    background-color: #FFF380 !important;
+}
+
+.card {
+    background-color: #FFF380;
+}
+
+.btn-pastel-pink {
+    background-color: #E9A6C2 !important;
+    border-color: #E9A6C2 !important;
+}

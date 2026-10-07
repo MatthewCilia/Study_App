@@ -1,0 +1,56 @@
+{% extends "study/layout.html" %}
+
+{% block title %}Delete Session{% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h2 class="card-title mb-4">
+                    Delete Session
+                </h2>
+
+                <p>
+                    Are you sure you want to delete this session?
+                </p>
+
+                <div class="mb-4">
+                    <p>
+                        <strong>Title:</strong>
+                        {{ session.subject }}
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+
+                    <a
+                        href="{% url 'sessions' %}"
+                        class="btn btn-pastel-pink"
+                        >
+                        Cancel
+
+                    </a>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger"
+                        >
+                            Delete Session
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

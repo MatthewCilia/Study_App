@@ -1,0 +1,25 @@
+{% extends "study/layout.html" %}
+
+{% block title %}Edit Session{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1 class="mb-4">Edit Session</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-pastel-yellow">
+            Save Changes
+        </button>
+
+        <a href="{% url 'sessions' %}" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
+
+{% endblock %}

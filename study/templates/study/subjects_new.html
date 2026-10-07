@@ -1,0 +1,38 @@
+{% extends "study/layout.html" %}
+
+{% block title %}Add Subject{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+
+            <h2 class="text-center mb-4">Add Subject</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.errors }}
+                <div class="mb-3">
+                    {{ form.name }}
+                    {{ form.name.errors }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit">
+                        Add Subject
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,25 @@
+{% extends "study/layout.html" %}
+
+{% block title %}Edit Subject{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1 class="mb-4">Edit Subject</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-pastel-yellow">
+            Save Changes
+        </button>
+
+        <a href="{% url 'subjects' %}" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
+
+{% endblock %}
